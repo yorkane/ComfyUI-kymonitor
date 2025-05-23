@@ -297,6 +297,7 @@ class ComfyMonitor:
                         "status": status_str,
                         "outputs": history_item.get('outputs', {}),
                         "messages": status_dict.get('messages', []),
+                        "prompts":  history_item.get('prompt', []),
                     }
                 else:
                     if prompt_id_str in self._completed_prompts_count:
@@ -330,9 +331,7 @@ class ComfyMonitor:
                 queue_status = self.get_queue_status()
                 # 检查队列是否为空
                 if len(queue_status["prompts"]) > 0:
-                    logger.info(
-                        f"Kmonitor: {APP_CONFIG.prompt_server_event_name}:\n{queue_status}"
-                    )
+                    # logger.info(                        f"Kmonitor: {APP_CONFIG.prompt_server_event_name}:\n{queue_status}"  )
                     await self.send_message("ky_monitor.queue", queue_status)
                 else:
                     logger.debug("队列为空，跳过消息发送")
